@@ -8,12 +8,13 @@ load_dotenv(find_dotenv())
 
 openai.api_type = "azure"
 openai.api_base = os.getenv("AZURE_OPENAI_ENDPOINT")
-openai.api_version = "2023-05-15"
+openai.api_version = "2023-07-01-preview"
 openai.api_key = os.getenv("AZURE_OPENAI_KEY")
 
 response = openai.ChatCompletion.create(
-    max_tokens=1000,
-    engine="gpt35", # engine = "deployment_name".
+    engine="gpt35-16k",  # engine is the deployment name on Azure Portal
+    max_tokens=4000,
+    temperature=0,
     messages=[
 {
     "role": "system", "content": """
@@ -22,7 +23,9 @@ You are an assistant designed to extract entities from medical prescription. Use
    "drug_name": "",
    "drug_strength": "",
    "drug_amount": "",
-   "drug_frequency_per_day": ""
+   "drug_unit": "",
+   "drug_frequency": "",
+   "drug_time_unit": "",
 }
 """
 },
@@ -54,5 +57,3 @@ Ngày uống 3 lần, mỗi lần 1 GÓI
 
 print(response)
 print(response['choices'][0]['message']['content'])
-
-

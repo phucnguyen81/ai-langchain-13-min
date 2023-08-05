@@ -1,2 +1,4 @@
 .env
 .venv/
+.langchain13min/
+*.pyc
